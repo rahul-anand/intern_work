@@ -1950,7 +1950,10 @@ aptfast_install packagekit-gtk3-module
 
 aptfast_install python-matplotlib
 
-
+#Non Free Modules
+add_apt_repo "ppa:xqms/opencv-nonfree"
+aptget_upgrade
+aptfast_install libopencv-nonfree-dev
 
 #Ruby
 

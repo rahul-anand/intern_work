@@ -141,6 +141,43 @@ pixelSimilarity (Mat img1, Mat img2)
 	output.val[2] = fmeasure;
 	return output;
 }
+Scalar getHistScore(Mat img1,Mat img2)
+{
+Scalar score;
+ /// Convert to HSV
+Mat hsv_1;
+Mat hsv_2;
+    cvtColor( img1, hsv_1, COLOR_BGR2HSV );
+    cvtColor( img2, hsv_2, COLOR_BGR2HSV );
+  
+
+    
+    int h_bins = 50; int s_bins = 60;
+    int histSize[] = { h_bins, s_bins };
+
+    // hue varies from 0 to 179, saturation from 0 to 255
+    float h_ranges[] = { 0, 180 };
+    float s_ranges[] = { 0, 256 };
+
+    const float* ranges[] = { h_ranges, s_ranges };
+
+    // Use the o-th and 1-st channels
+    int channels[] = { 0, 1 };
+MatND hist_1,hist_2;
+ calcHist( &hsv_1, 1, channels, Mat(), hist_1, 2, histSize, ranges, true, false );
+    normalize( hist_1, hist_1, 0, 1, NORM_MINMAX, -1, Mat() );
+ calcHist( &hsv_2, 1, channels, Mat(), hist_2, 2, histSize, ranges, true, false );
+    normalize( hist_2, hist_2, 0, 1, NORM_MINMAX, -1, Mat() );
+  for( int i = 0; i < 4; i++ )
+    {
+        int compare_method = i;
+         score.val[i] =compareHist( hist_1, hist_2, compare_method );
+       
+cout<<"Method= "<<i<<" Score: "<<score<<endl;
+    }
+return score;
+}
+
 	int
 main (int argc, char **argv)
 {
@@ -153,9 +190,9 @@ main (int argc, char **argv)
 	for (int i = 1; i < 101; i = i + 2)
 		blur (img1, imgL, Size (i, i));
 	imshow ("opencvtest1", img1);
-	waitKey (0);
+	waitKey (10);
 	imshow ("opencvtest2", imgL);
-	waitKey (0);
+	waitKey (10);
 	Scalar mssimV = getMSSIM (img1, imgL);
 	cout << "MSSIM: "<< " Red " << setiosflags (ios::fixed) << setprecision (2) << mssimV.val[2] *100 << "%" << " Green " << setiosflags(ios::fixed) << setprecision (2) <<mssimV.val[1] *100 << "%" << " Blue "<< setiosflags (ios::fixed) << setprecision (2) <<	mssimV.val[0] * 100 << "%"<<endl;
 	
@@ -163,5 +200,11 @@ main (int argc, char **argv)
 	Scalar result = pixelSimilarity (img1, imgL);
 	cout << "Pixel Similarity: " << result[0] << " " << result[1] << " " <<	result[2] << endl;
 	cout << "L2 Similarity: " << getSimilarity (img1, imgL) << endl;
+Scalar Hist_score=getHistScore(img1,imgL);
+cout<<Hist_score.rows<<endl;
+cout<<"Histogram Matching Score: ";
+for(int i=0;i<Hist_score.rows;i++)
+cout<<Hist_score[i]<<" ";
+cout<<endl;
 	return 0;
 }
