@@ -182,17 +182,11 @@ return score;
 main (int argc, char **argv)
 {
 	// Input parameters
-	if (argc < 2)
+	if (argc < 3)
 		return -1;
-	cout << argv[1] << endl;
+	cout << argv[1] << " "<<argv[2]<<endl;
 	Mat img1 = imread (argv[1], CV_LOAD_IMAGE_COLOR);
-	Mat imgL;
-	for (int i = 1; i < 101; i = i + 2)
-		blur (img1, imgL, Size (i, i));
-	imshow ("opencvtest1", img1);
-	waitKey (10);
-	imshow ("opencvtest2", imgL);
-	waitKey (10);
+	Mat imgL=imread (argv[2], CV_LOAD_IMAGE_COLOR);;
 	Scalar mssimV = getMSSIM (img1, imgL);
 	cout << "MSSIM: "<< " Red " << setiosflags (ios::fixed) << setprecision (2) << mssimV.val[2] *100 << "%" << " Green " << setiosflags(ios::fixed) << setprecision (2) <<mssimV.val[1] *100 << "%" << " Blue "<< setiosflags (ios::fixed) << setprecision (2) <<	mssimV.val[0] * 100 << "%"<<endl;
 	
