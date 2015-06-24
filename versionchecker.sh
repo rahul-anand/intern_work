@@ -72,7 +72,7 @@ sqlplus -v
 racket -v
 
 #TSQL
-
+sqlcmd  | grep Version
 
 #DB2
 
@@ -130,6 +130,7 @@ gst -v
 echo 'puts [info patchlevel];exit 0' | tclsh
 
 #WhiteSpace
+/usr/local/whitespace/wspace | head -1
 
 #XQuery
 #basex
