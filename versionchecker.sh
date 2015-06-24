@@ -12,8 +12,7 @@ gcc -v
 g++ -v
 
 #Clojure
-#clojure
-#*clojure-version*
+clojure -e '(clojure-version)'
 
 #CSHARP
 dmcs --version
