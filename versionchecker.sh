@@ -133,7 +133,7 @@ echo 'puts [info patchlevel];exit 0' | tclsh
 /usr/local/whitespace/wspace | head -1
 
 #XQuery
-#basex
+basex -c"list;info" | grep Version
 
 #MAVEN
 mvn -v
