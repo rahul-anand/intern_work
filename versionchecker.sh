@@ -3,6 +3,7 @@ bash --version
 echo "$BASH_VERSION"
 
 #BF
+bf | grep version 
 
 #C
 gcc -v
